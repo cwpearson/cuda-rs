@@ -6,6 +6,8 @@ authors = ["Carl Pearson <pearson@illinois.edu>"]
 [build-dependencies]
 glob = "0.2"
 regex = "1"
+find = { git = "https://github.com/cwpearson/find-rs", tag = "v0.1.0" }
 
 [dependencies]
+
 
