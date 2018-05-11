@@ -3,4 +3,9 @@ name = "cuda"
 version = "0.1.0"
 authors = ["Carl Pearson <pearson@illinois.edu>"]
 
+[build-dependencies]
+glob = "0.2"
+regex = "1"
+
 [dependencies]
+
