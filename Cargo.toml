@@ -9,5 +9,6 @@ regex = "1"
 find = { git = "https://github.com/cwpearson/find-rs", tag = "v0.1.0" }
 
 [dependencies]
-
+lazy_static = "1.0"
+libc = "0.2"
 
