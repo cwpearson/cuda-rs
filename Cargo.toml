@@ -8,6 +8,7 @@ glob = "0.2"
 regex = "1"
 find = { git = "https://github.com/cwpearson/find-rs", tag = "v0.1.0" }
 bindgen = "0.36"
+nvcc = { git = "https://github.com/cwpearson/nvcc-rs", branch = "master" }
 
 [dependencies]
 libc = "0.2"
