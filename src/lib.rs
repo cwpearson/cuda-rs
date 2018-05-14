@@ -1,7 +1,4 @@
 extern crate libc;
-#[macro_use]
-extern crate lazy_static;
-
 
 mod driver;
 mod runtime;
@@ -9,60 +6,59 @@ mod runtime;
 use std::result;
 use std::mem;
 
-lazy_static! {
-    static ref SYSTEM: System = System::new();
-}
 
 #[cfg(test)]
 mod tests {
+
+    use super::*;
+
     #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
+    fn cuda_test_dev0() {
+        assert!(true);
     }
 }
 
-struct Error {}
+#[derive(Debug)]
+pub struct Error {
+    kind: ErrorKind,
+}
+
+#[derive(Debug)]
+pub enum ErrorKind {
+    Success,
+}
+
+impl ErrorKind {
+    fn from_runtime(err: runtime::cudaError_t) -> ErrorKind {
+        match err {
+        runtime::cudaError_cudaSuccess => ErrorKind::Success,
+        _ => panic!("Unhandled runtime error {}", err),
+        }
+    }
+
+    fn from_driver(err: runtime::cudaError_t) -> ErrorKind {
+        match err {
+        _ => panic!("Unhandled driver error {}", err),
+        }
+    }
+}
+
+impl Error {
+    fn from(err: runtime::cudaError) -> Error {
+        Error {
+            kind: ErrorKind::from_driver(err)
+        }
+    }
+}
 
 type Result<T> = result::Result<T, Error>;
 
-pub fn device(id: i32) -> Option<Device> {
-    if let Ok(count) = runtime::device_count() {
-        if id < count {
-            Some(Device::new(id))
-        } else {
-            None
-        }
-    } else {
-        None
-    }
-}
-
-pub struct System {
-    devices: Vec<Device>,
-}
-
-impl System {
-    fn new() -> System {
-        let num_devs = runtime::device_count().unwrap();
-        let mut devs = vec![];
-        for i in 0..num_devs {
-            devs.push(Device::new(i));
-        }
-
-        System {
-            devices: devs,
-        }
-    }
-}
-
-pub struct Device {
-    id: i32,
-}
-
-impl Device {
-    fn new(id: i32) -> Device {
-        Device {
-            id: id
-        }
+pub fn device_count() -> Result<i64> {
+    
+    let mut count: libc::c_int = unsafe { mem::uninitialized() };
+    let err = unsafe { runtime::cudaGetDeviceCount(&mut count) };
+    match err {
+        runtime::cudaError_cudaSuccess => Ok(count as i64),
+        _ => Err(Error::from(err)),
     }
 }
