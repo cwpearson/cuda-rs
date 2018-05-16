@@ -1,7 +1,7 @@
 extern crate libc;
 
-mod driver;
-mod runtime;
+pub mod driver;
+pub mod runtime;
 
 use std::result;
 use std::mem;
