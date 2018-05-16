@@ -6,7 +6,7 @@ authors = ["Carl Pearson <pearson@illinois.edu>"]
 [build-dependencies]
 glob = "0.2"
 regex = "1"
-find = { git = "https://github.com/cwpearson/find-rs", tag = "v0.1.1" }
+find = { git = "https://github.com/cwpearson/find-rs", tag = "v0.1.2" }
 bindgen = "0.36"
 nvcc = { git = "https://github.com/cwpearson/nvcc-rs", branch = "master" }
 
