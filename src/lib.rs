@@ -29,7 +29,7 @@ pub enum ErrorKind {
 }
 
 impl ErrorKind {
-    fn from_runtime(err: runtime::cudaError_t) -> ErrorKind {
+    fn from_runtime(err: runtime::cudaError) -> ErrorKind {
         match err {
         runtime::cudaError_cudaSuccess => ErrorKind::Success,
         _ => panic!("Unhandled runtime error {}", err),
@@ -44,14 +44,14 @@ impl ErrorKind {
 }
 
 impl Error {
-    fn from(err: runtime::cudaError) -> Error {
+    pub fn from(err: runtime::cudaError) -> Error {
         Error {
-            kind: ErrorKind::from_driver(err)
+            kind: ErrorKind::from_runtime(err)
         }
     }
 }
 
-type Result<T> = result::Result<T, Error>;
+pub type Result<T> = result::Result<T, Error>;
 
 pub fn device_count() -> Result<i64> {
     
