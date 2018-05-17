@@ -12,7 +12,6 @@ use std::vec::Vec;
 const NVCC_SEARCH_LINUX: &[&str] = &["/usr/local/cuda/bin", "/usr/local/cuda*/bin"];
 
 pub fn main() {
-    println!("cargo:rerun-if-changed=build.rs");
     println!("cargo:rerun-if-changed=runtime.h");
     println!("cargo:rerun-if-changed=driver.h");
 

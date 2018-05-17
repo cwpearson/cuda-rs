@@ -13,6 +13,7 @@ mod tests {
 
     #[test]
     fn cuda_test_dev0() {
+        device_count();
         assert!(true);
     }
 }
