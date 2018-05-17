@@ -32,7 +32,7 @@ pub fn main() {
 
     // Build runtime bindings
     bindgen::Builder::default()
-    // .trust_clang_mangling(false)
+    .trust_clang_mangling(false)
     .header("runtime.h")
     .clang_args(include_flags)
     .opaque_type("max_align_t")
@@ -43,7 +43,7 @@ pub fn main() {
 
     // Build driver bindings
     bindgen::Builder::default()
-    // .trust_clang_mangling(false)
+    .trust_clang_mangling(false)
     .header("driver.h")
     .clang_args(include_flags)
     .opaque_type("max_align_t")
